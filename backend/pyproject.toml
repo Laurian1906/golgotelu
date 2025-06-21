@@ -1,0 +1,21 @@
+[project]
+name = "golgotelu"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Laurian1906",email = "laur.laury@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "fastapi[standard] (>=0.115.13,<0.116.0)",
+    "uvicorn (>=0.34.3,<0.35.0)",
+    "requests (>=2.32.4,<3.0.0)",
+    "google-genai (>=1.21.1,<2.0.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
