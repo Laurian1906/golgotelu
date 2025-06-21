@@ -24,6 +24,7 @@ function App() {
   const handleAIResponse = (response: string) => {
     setAiAnswer(response);
     setIsLoading(false);
+    //test
   }
 
   return (
