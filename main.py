@@ -1,21 +1,22 @@
+"""
+The main part of the code which runs the AI
+"""
+
 # IMPORTS
-from pathlib import Path
+from google import genai
+from google.genai import types
 
-from utils.file_processors.ppt import PptProcessor
-from utils.song_processor import SongProcessor
+from utils.PROMPTS.user_prompt import USER_PROMPT
+from utils.PROMPTS.ai_prompt import PROMPT
+from utils.env_loader import GEMINI_API_KEY
 
-if __name__ == "__main__":
-    path = Path("data/songs-pptx")
-    for file in path.iterdir():
-        if file.is_file():
-            print(file)
-            lyrics = PptProcessor.extract_lyrics(file)
-            print(lyrics)
-            sentiment = SongProcessor.analyze_sentiment(lyrics, file)
-            print(sentiment)
-            input_emotion = input("Type emotion of this song: ")
-            input_category = input("Type category of this song: ")
-            input_key = input("Type the key of this song:")
+client = genai.Client(api_key=GEMINI_API_KEY)
 
-            song_processor = SongProcessor(lyrics, file)
-            song_processor.classify_song(emotion=input_emotion, category=input_category, key=input_key)
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    config=types.GenerateContentConfig(
+        system_instruction=PROMPT),
+    contents=USER_PROMPT
+)
+
+print(response.text)
