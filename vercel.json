@@ -1,0 +1,43 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "framework": null,
+  "buildCommand": "cd ui && npm install && npm run build",
+  "outputDirectory": "ui/dist",
+  "installCommand": "pip install -r requirements.txt && cd ui && npm install",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.py" }
+  ],
+  "functions": {
+    "api/**/*.py": {
+      "maxDuration": 300,
+      "runtime": "python3.11"
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://login.microsoftonline.com; frame-ancestors 'none'" }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/autopilot",
+      "schedule": "0 6 * * *"
+    }
+  ],
+  "ignoreCommand": "exit 1"
+}

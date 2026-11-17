@@ -1,0 +1,17 @@
+# Vercel Python runtime requirements (mirrors pyproject.toml dependencies).
+# Keep in sync with pyproject.toml.
+google-genai>=2.29
+python-pptx>=1.0.2
+python-docx>=1.1
+lxml
+numpy
+openai
+fastapi
+uvicorn[standard]
+starlette
+itsdangerous
+tzdata
+psycopg[binary,pool]>=3.1
+cryptography>=41.0
+msal>=1.24
+httpx>=0.25
